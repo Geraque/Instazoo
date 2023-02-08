@@ -1,16 +1,16 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Data
 @Entity
+@Data
 public class Post {
 
     @Id
@@ -26,7 +26,7 @@ public class Post {
     private Set<String> likedUsers = new HashSet<>();
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "post",orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "post", orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
     @Column(updatable = false)
     private LocalDateTime createdDate;
@@ -35,7 +35,8 @@ public class Post {
     }
 
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate()
+    {
         this.createdDate = LocalDateTime.now();
     }
 }

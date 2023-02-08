@@ -1,12 +1,12 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
 @Entity
+@Data
 public class Comment {
 
     @Id
@@ -18,15 +18,17 @@ public class Comment {
     private String username;
     @Column(nullable = false)
     private Long userId;
-    @Column(columnDefinition = "text",nullable = false)
+    @Column(columnDefinition = "text", nullable = false)
     private String message;
     @Column(updatable = false)
     private LocalDateTime createdDate;
 
     public Comment() {
     }
+
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate()
+    {
         this.createdDate = LocalDateTime.now();
     }
 }

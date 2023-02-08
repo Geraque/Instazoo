@@ -1,12 +1,14 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
 import net.minidev.json.annotate.JsonIgnore;
 
-@Data
+import javax.persistence.*;
+
 @Entity
+@Data
 public class ImageModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
