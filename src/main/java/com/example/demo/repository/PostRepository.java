@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post,Long> {
+public interface PostRepository extends JpaRepository<Post, Long> {
 
-    //SELECT * FROM post as p where User='user' SORT DESC
     List<Post> findAllByUserOrderByCreatedDateDesc(User user);
 
     List<Post> findAllByOrderByCreatedDateDesc();
 
     Optional<Post> findPostByIdAndUser(Long id, User user);
+
 }

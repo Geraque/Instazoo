@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CommentRepository extends JpaRepository<Comment,Long> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> findAllByPost(Post post);
 
-    Comment findByUserIdAndUserId(Long commentId, Long userId);
+    Comment findByIdAndUserId(Long commentId, Long userId);
 
 }
