@@ -33,21 +33,22 @@ public class CommentService {
         this.userRepository = userRepository;
     }
 
-    public Comment saveComments(Long postId, CommentDTO commentDTO, Principal principal){
+    public Comment saveComment(Long postId, CommentDTO commentDTO, Principal principal) {
         User user = getUserByPrincipal(principal);
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new PostNotFoundException("Post cannot be found for username: "+user.getUsername()));
+                .orElseThrow(() -> new PostNotFoundException("Post cannot be found for username: " + user.getEmail()));
 
         Comment comment = new Comment();
         comment.setPost(post);
         comment.setUserId(user.getId());
         comment.setUsername(user.getUsername());
         comment.setMessage(commentDTO.getMessage());
+
         LOG.info("Saving comment for Post: {}", post.getId());
         return commentRepository.save(comment);
     }
 
-    public List<Comment> getAllCommentsForPost(Long postId){
+    public List<Comment> getAllCommentsForPost(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFoundException("Post cannot be found"));
         List<Comment> comments = commentRepository.findAllByPost(post);
@@ -55,17 +56,15 @@ public class CommentService {
         return comments;
     }
 
-    public void deleteComment(Long commentId){
+    public void deleteComment(Long commentId) {
         Optional<Comment> comment = commentRepository.findById(commentId);
         comment.ifPresent(commentRepository::delete);
-
     }
 
 
-    private User getUserByPrincipal(Principal principal){
-
-        String username= principal.getName();
+    private User getUserByPrincipal(Principal principal) {
+        String username = principal.getName();
         return userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found with username: "+username));
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found with username " + username));
     }
 }

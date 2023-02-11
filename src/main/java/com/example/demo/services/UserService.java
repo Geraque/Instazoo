@@ -17,7 +17,6 @@ import java.security.Principal;
 
 @Service
 public class UserService {
-
     public static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
@@ -29,7 +28,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User createUser(SignupRequest userIn){
+    public User createUser(SignupRequest userIn) {
         User user = new User();
         user.setEmail(userIn.getEmail());
         user.setName(userIn.getFirstname());
@@ -38,17 +37,16 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(userIn.getPassword()));
         user.getRoles().add(ERole.ROLE_USER);
 
-        try{
-            LOG.info("Saving User {}",userIn.getEmail());
+        try {
+            LOG.info("Saving User {}", userIn.getEmail());
             return userRepository.save(user);
-        } catch (Exception e){
+        } catch (Exception e) {
             LOG.error("Error during registration. {}", e.getMessage());
-            throw new UserExistException("The user "+user.getUsername()+ " already exist. Please check credentials");
+            throw new UserExistException("The user " + user.getUsername() + " already exist. Please check credentials");
         }
     }
 
-    public User updateUser(UserDTO userDTO, Principal principal){
-
+    public User updateUser(UserDTO userDTO, Principal principal) {
         User user = getUserByPrincipal(principal);
         user.setName(userDTO.getFirstname());
         user.setLastname(userDTO.getLastname());
@@ -57,16 +55,18 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getCurrentUser(Principal principal){
-
+    public User getCurrentUser(Principal principal) {
         return getUserByPrincipal(principal);
     }
 
-    private User getUserByPrincipal(Principal principal){
-
-        String username= principal.getName();
+    private User getUserByPrincipal(Principal principal) {
+        String username = principal.getName();
         return userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found with username: "+username));
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found with username " + username));
+
     }
 
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
 }

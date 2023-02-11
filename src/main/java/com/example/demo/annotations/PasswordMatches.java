@@ -1,6 +1,5 @@
 package com.example.demo.annotations;
 
-
 import com.example.demo.validations.PasswordMatchesValidator;
 
 import javax.validation.Constraint;
@@ -12,7 +11,6 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = PasswordMatchesValidator.class)
 @Documented
 public @interface PasswordMatches {
-
     String message() default "Password do not match";
 
     Class<?>[] groups() default{};
