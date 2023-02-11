@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Service
 public class PostService {
-    public static final Logger LOG = LoggerFactory.getLogger(UserService.class);
+    public static final Logger LOG = LoggerFactory.getLogger(PostService.class);
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final ImageRepository imageRepository;
